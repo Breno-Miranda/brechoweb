@@ -1,0 +1,57 @@
+	.menu{
+		width: 10%;
+		height: 100px;
+		margin-top: 5%;
+		margin-left: 5%;
+
+		display: inline-block;
+		padding: 3px 8px;
+		margin-bottom: 0;
+		line-height: 1.4;
+		white-space: nowrap;
+		background-image: none;
+
+		border-radius: 4px;
+	}
+	
+	.menu i {
+		font-size: 50px;
+	}
+
+	a:link {
+	   color: #6d6c6d;
+ 	   text-decoration:none; 
+
+	}
+	a:visited{
+		color: #6d6c6d;
+	}
+
+	a:active{
+		color: #6d6c6d;
+	}
+
+	 .main{ margin: auto; width: 80%; background: #fff;  padding: 10px; margin-top: 5%; margin-bottom: 10%;}
+
+
+	pagination {
+		display: inline-block;
+	}
+
+	.pagination a {
+		color: black;
+		float: left;
+		padding: 8px 16px;
+		text-decoration: none;
+	}
+
+	.pagination a.active {
+		background-color: #3C4B52;
+		color: white;
+		border-radius: 5px;
+	}
+
+	.pagination a:hover:not(.active) {
+		background-color: #ddd;
+		border-radius: 5px;
+	}
