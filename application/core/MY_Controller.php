@@ -13,9 +13,9 @@ class MY_Controller extends CI_Controller {
 
       $this->load->model('MY_Model');
 
-      //$this->MY_Model->instagram();
+    //   $this->MY_Model->instagram();
 
-      //phpinfo();
+      // phpinfo();
   	}
 
   	public function layout($config = array()){

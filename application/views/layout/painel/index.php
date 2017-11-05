@@ -25,30 +25,27 @@
             <a class="btn btn-default" href="<?= BaseController($c_class, null)?>">
              <span class="icon icon-folder"></span>
             </a>
-            <a  href="<?= BaseController('nuvem' , null) ?>" class="btn btn-default active">
-              <span class="icon icon-cloud"></span>
+            <a  href="<?= BaseController('pagamento' , null) ?>" class="btn btn-default active">
+              <span class="icon icon-cc-nc"></span>
             </a>
-            <button class="btn btn-default">
-              <span class="icon icon-popup"></span>
-            </button>
-            <button class="btn btn-default">
-              <span class="icon icon-shuffle"></span>
-            </button>
+            <a  href="<?= BaseController('download' , null) ?>" class="btn btn-default">
+              <span class="icon icon-download"></span>
+            </a>
+            <a  href="<?= BaseController('permissao' , null) ?>" class="btn btn-default">
+              <span class="icon icon-lock"></span>
+            </a>
           </div>
-
-          <a  href="<?= base_url() ?>" target="_blanck" class="btn btn-default">
-          <span class="icon icon-globe"></span> 
-                Ver Site
-          </a>
-
-           <a href="<?= BaseController($c_class , 'salvar' , null , 'painel') ?>" 
-           class="btn btn-default  pull-right">
-            <span class="icon icon-plus-circled"></span>
-          </a>
+            <a  href="<?= base_url() ?>" target="_blanck" class="btn btn-default">
+            <span class="icon icon-globe"></span> 
+                  Ver Site
+            </a>
+            <a href="<?= BaseController($c_class , 'salvar' , null , 'painel') ?>" 
+            class="btn btn-default  pull-right">
+              <span class="icon icon-plus-circled"></span>
+            </a>
         </div>
       </header>
 
-      <!-- Your app's content goes inside .window-content -->
       <div class="window-content">
         <div class="pane-group">
           <div class="pane pane-sm sidebar">
@@ -60,11 +57,25 @@
                   Home
               </a>
               <a href="<?= base_url('painel/sair')?>" class="nav-group-item">
-                <span class="icon icon-monitor"></span>
+                <span class="icon icon-moon"></span>
                 Sair
               </a>
 
-              
+
+              <h5 class="nav-group-title">Redesocial</h5>
+
+              <a href="<?= base_url('painel/redesocial/facebook')?>" class="nav-group-item">
+                <span class="icon icon-home"></span>
+                  Facebook
+              </a>
+              <a href="<?= base_url('painel/redesocial/instagram')?>" class="nav-group-item">
+                <span class="icon icon-monitor"></span>
+                  Instagram
+              </a>
+              <a href="<?= base_url('painel/redesocial/twitter')?>" class="nav-group-item">
+                <span class="icon icon-monitor"></span>
+                  Twitter
+              </a>
             </nav>
           </div>
 
