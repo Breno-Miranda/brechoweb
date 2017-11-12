@@ -3,6 +3,12 @@
 require_once 'vendor/Facebook/autoload.php';
 
 class Facebook extends MY_Controller{
+
+	private $config_api = array(
+		'app_id' => '',
+		'app_secret' => '',
+		'default_graph_version' => 'v2.2',
+	);
 		
 	function __construct() 
 	{
@@ -14,29 +20,39 @@ class Facebook extends MY_Controller{
 	public function index()
 	{
 
-		$fb = new Facebook\Facebook([
-			'app_id' => '1861908300777042',
-			'app_secret' => '59d6d003a82bc866b160ae4ef57543ba',
-			'default_graph_version' => 'v2.2',
-		]);
+		$fb = new Facebook\Facebook($this->config_api);
 
 			$helper = $fb->getRedirectLoginHelper();
 			
 			$permissions = ['email' , 'publish_pages' , 'publish_actions' , 'manage_pages']; // Optional permissions
 			$loginUrl = $helper->getLoginUrl(base_url('painel/redesocial/facebook/callback'), $permissions);
 			
-			echo '<a href="' . htmlspecialchars($loginUrl) . '">Log in with Facebook!</a>';
+			$link = '<a class="btn btn-lg btn-success" href="' . htmlspecialchars($loginUrl) . '">Log in with Facebook!</a>';
+
+			$config = array(
+				'c_class' => get_class(),
+				'c_metodo' => get_class_methods(get_class())[1],
+				'c_diretorio_pagina' => 'painel/pagina/redesocial/facebook',
+				'c_layout' => 'painel',
+				'titulo' => get_class(),
+				'link' => $link
+			);
+	
+			$data['pagina'] = PaginaView(
+				$config['c_class'], 
+				$config['c_metodo'], 
+				$config['c_diretorio_pagina'], 
+				$config['c_layout']
+			);
+	
+			$this->load->view('layout/painel/index' , array_merge($data ,$config ));
 			
 		 
 		}
 
 		public function callback()
 		{
-			$fb = new Facebook\Facebook([
-				'app_id' => '1861908300777042', // Replace {app-id} with your app id
-				'app_secret' => '59d6d003a82bc866b160ae4ef57543ba',
-				'default_graph_version' => 'v2.2',
-				]);
+			$fb = new Facebook\Facebook($this->config_api);
 			
 			$helper = $fb->getRedirectLoginHelper();
 			
@@ -79,7 +95,7 @@ class Facebook extends MY_Controller{
 			var_dump($tokenMetadata);
 			
 			// Validation (these will throw FacebookSDKException's when they fail)
-			$tokenMetadata->validateAppId('1861908300777042'); // Replace {app-id} with your app id
+			$tokenMetadata->validateAppId($this->config_api['app_id']); // Replace {app-id} with your app id
 			// If you know the user ID this access token belongs to, you can validate it here
 			//$tokenMetadata->validateUserId('123');
 			$tokenMetadata->validateExpiration();
@@ -107,13 +123,7 @@ class Facebook extends MY_Controller{
 
 		public function push()
 		{
-
-
-			$fb = new Facebook\Facebook([
-				'app_id' => '1861908300777042',
-				'app_secret' => '59d6d003a82bc866b160ae4ef57543ba',
-				'default_graph_version' => 'v2.2',
-			]);
+			$fb = new Facebook\Facebook($this->config_api);
  
 		  $linkData = [
 				'link' => 'http://brenomirandaster.com/brechoweb/',

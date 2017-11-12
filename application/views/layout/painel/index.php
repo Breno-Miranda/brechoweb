@@ -57,7 +57,7 @@
                   Home
               </a>
               <a href="<?= base_url('painel/sair')?>" class="nav-group-item">
-                <span class="icon icon-moon"></span>
+                <span class="icon icon-logout"></span>
                 Sair
               </a>
 
@@ -65,18 +65,18 @@
               <h5 class="nav-group-title">Redesocial</h5>
 
               <a href="<?= base_url('painel/redesocial/facebook')?>" class="nav-group-item">
-                <span class="icon icon-home"></span>
+                <span class="icon icon-facebook"></span>
                   Facebook
               </a>
               <a href="<?= base_url('painel/redesocial/instagram')?>" class="nav-group-item">
-                <span class="icon icon-monitor"></span>
+                <span class="icon icon-instagram"></span>
                   Instagram
               </a>
               <a href="<?= base_url('painel/redesocial/twitter')?>" class="nav-group-item">
-                <span class="icon icon-monitor"></span>
+                <span class="icon icon-twitter"></span>
                   Twitter
               </a>
-            </nav>
+            </nav> 
           </div>
 
           <div class="pane">

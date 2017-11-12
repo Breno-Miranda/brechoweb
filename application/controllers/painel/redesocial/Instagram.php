@@ -4,6 +4,12 @@ require_once 'vendor/Instagram/Instagram.php';
 
 
 class Instagram extends MY_Controller{
+
+	private $config_api = array(
+		'apiKey' => '',
+		'apiSecret' => '',
+		'apiCallback' => 'http://localhost/brechoweb/painel/redesocial/instagram/callback' 
+	);
 		
 	function __construct() 
 	{
@@ -14,26 +20,41 @@ class Instagram extends MY_Controller{
 	public function index()
 	{
 
-        $instagram = new Instagram\Instagram(array(
-			'apiKey' => '84a33496f49c48b1974cbff77286262e',
-			'apiSecret' => '41ffc29633444682b257fb46032ddcf0',
-			'apiCallback' => base_url('painel/redesocial/instagram/callback') // must point to success.php
-		));
-		// create login URL
-		$link = $instagram->getLoginUrl();
+		$instagram = new Instagram\Instagram($this->config_api);
+		
+		$link = $instagram->getLoginUrl(array(
+			'basic',
+			'likes',
+			'relationships'
+		  ));
 
-		echo '<a class="login" href="'.$link.'">» Login with Instagram</a>';
+		$link = '<a class="btn btn-lg btn-success" class="login" href="'.$link.'">» Login with Instagram</a>';
+
+		$config = array(
+			'c_class' => get_class(),
+			'c_metodo' => get_class_methods(get_class())[1],
+			'c_diretorio_pagina' => 'painel/pagina/redesocial/instagram',
+			'c_layout' => 'painel',
+			'titulo' =>  get_class(),
+			'link' => $link
+		);
+
+		$data['pagina'] = PaginaView(
+			$config['c_class'], 
+			$config['c_metodo'], 
+			$config['c_diretorio_pagina'], 
+			$config['c_layout']
+		);
+
+		$this->load->view('layout/painel/index' , array_merge($data ,$config ));
 
 	}
 	
 
 	public function callback()
 	{
-		$instagram = new Instagram\Instagram(array(
-			'apiKey' => '84a33496f49c48b1974cbff77286262e',
-			'apiSecret' => '41ffc29633444682b257fb46032ddcf0',
-			'apiCallback' => base_url('painel/redesocial/instagram/callback') // must point to success.php
-		));
+		$instagram = new Instagram\Instagram($this->config_api);
+
 		$token = $instagram->getOAuthToken($_GET['code']);
 
 		 print_r($token);
