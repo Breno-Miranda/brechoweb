@@ -1,6 +1,6 @@
--- create database db_fraquiaapp;
+-- create database DB_PADRAO sistema de venda de app e graficas;
 
--- use db_fraquiaapp;
+-- use DB_PADRAO;
 
 create table tb_Site(
 	id int not null auto_increment primary key,
@@ -169,6 +169,17 @@ create table tb_Blogs(
     fonte varchar(200) not null,
     data timestamp not null
 );
+
+create table tb_politica(
+	id int not null auto_increment primary key, 
+	slug varchar(200) not null,
+    subtitulo varchar(200) not null,
+    texto longtext not null,
+    imagem varchar(600) not null default 'FILE',
+	file varchar(600) not null default 'FILE',
+    data timestamp not null
+);
+
 
 create table tb_Videos(
 	id int not null auto_increment primary key,

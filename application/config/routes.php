@@ -52,6 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 $route['blogs/(:any)'] = 'blogs/view/id/$1/$2/$3';
+$route['politica/(:any)'] = 'politica/view/id/$1/$2/$3';
 
 
 $route['painel/sair'] = "painel/site/sair";

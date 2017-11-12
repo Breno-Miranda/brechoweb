@@ -13,9 +13,6 @@ class MY_Controller extends CI_Controller {
 
       $this->load->model('MY_Model');
 
-    //   $this->MY_Model->instagram();
-
-      // phpinfo();
   	}
 
   	public function layout($config = array()){
@@ -41,6 +38,12 @@ class MY_Controller extends CI_Controller {
     $dados['tabela'] = tabelasBD("blogs");
     $dados['campos'] = $this->Modulos_Model->tabela($dados['tabela']);
     $dados['Blogs_static_site_limit'] = $this->Modulos_Model->crud($dados , null);
+
+    $dados['limit'] = 5; 
+    $dados['metodo'] = $config['c_metodo'];
+    $dados['tabela'] = tabelasBD("politica");
+    $dados['campos'] = $this->Modulos_Model->tabela($dados['tabela']);
+    $dados['Politica_static_site_limit'] = $this->Modulos_Model->crud($dados , null);
     
    
     $dados_view_site['limit'] = 4; 

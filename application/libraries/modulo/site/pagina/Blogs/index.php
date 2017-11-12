@@ -1,13 +1,14 @@
 
+
 <div class="row"  style="margin-bottom:  10%; margin-top: 5%;">
- <?php foreach($Blogs as $result_blogs): ?>
-  <a href="<?= BaseController('blogs' , $result_blogs->id ,'', 'site'); ?>">
+ <?php foreach($$c_class as $result): ?>
+  <a href="<?= BaseController('blogs' , $result->id ,'', 'site'); ?>">
     <div class="col-md-4">
      <div class="card">
-      <img src="<?= $result_blogs->imagem ?>" style="width: 100%; height: 180px;">
+      <img src="<?= $result->imagem ?>" style="width: 100%; height: 180px;">
       </div>
       <div class="card-section">
-        <p><?= strtolower ($result_blogs->slug) ?></p>
+        <p><?= strtolower ($result->slug) ?></p>
       </div>
   </div> 
   </a>
@@ -15,7 +16,7 @@
 
 </div>
 <div class="row">
-<?php if (isset($pagination_blogs)): ?>
-      <?php echo $pagination_blogs; ?>
+<?php if (isset($pagination)): ?>
+      <?php echo $pagination; ?>
 <?php endif ?>
 </div>

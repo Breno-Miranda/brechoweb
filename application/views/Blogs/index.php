@@ -1,18 +1,22 @@
 
-<div class="">
-		<img src="<?= $Blogs_static_site_view[0]->imagem ?>" style="width: 100%; height: 550px;">
-	</div>
-<div class="row"  style="width: 100%; margin-bottom: 2%">
+
+<div class="row"  style="margin-bottom:  10%; margin-top: 5%;">
+ <?php foreach($$c_class as $result): ?>
+  <a href="<?= BaseController('blogs' , $result->id ,'', 'site'); ?>">
+    <div class="col-md-4">
+     <div class="card">
+      <img src="<?= $result->imagem ?>" style="width: 100%; height: 180px;">
+      </div>
+      <div class="card-section">
+        <p><?= strtolower ($result->slug) ?></p>
+      </div>
+  </div> 
+  </a>
+<?php endforeach; ?>
+
 </div>
-<ul class="accordion" data-accordion>
-  <li class="row accordion-navigation">
-    <p style="padding: 1%;">
-    	<i class="fa fa-sun-o" aria-hidden="true"></i> <?= date('d/m/Y'); ?> 
-    	<i class="fa fa-clock-o fa-1x" aria-hidden="true"></i> postagens <?= $Blogs_static_site_view[0]->data ?>
-    </p> 
-	<h3 align="center"> <?= $Blogs_static_site_view[0]->slug ?></h3>
-    <div id="panel1a" class=" row content active">
-      <?= $Blogs_static_site_view[0]->texto ?>
-    </div>
-  </li>
-</ul>
+<div class="row">
+<?php if (isset($pagination)): ?>
+      <?php echo $pagination; ?>
+<?php endif ?>
+</div>
