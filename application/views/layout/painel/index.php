@@ -2,18 +2,15 @@
 <html>
   <head>
     <title><?= $titulo ?></title>
-
     <!-- Stylesheets -->
     <link rel="stylesheet" href="<?= base_url('public/css/photon.min.css')?>">
     <link rel="stylesheet" href="<?= base_url('public/css/style.css')?>">
-
     <!-- Javascript -->
     <script src="<?= base_url('public/js/menu.js')?>" charset="utf-8"></script>
     <script src="https://use.fontawesome.com/2bd7e1b774.js"></script>
   </head>
   <body>
     <div class="window">
-
       <!-- .toolbar-header sits at the top of your app -->
       <header class="toolbar toolbar-header">
         <h1 class="title"><?= $titulo ?></h1>

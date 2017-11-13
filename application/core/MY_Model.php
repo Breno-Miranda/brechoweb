@@ -1,28 +1,34 @@
 <?php 
 class MY_Model extends CI_Model
 {
-	public $data_model = array(
-		'usuario_id' => '310390349',
-		'cliente_id' => '84a33496f49c48b1974cbff77286262e',
-		'api' => "https://api.instagram/v1/users/310390349/media/recent/?cliente_id=84a33496f49c48b1974cbff77286262e"
-
-	);
 
 	public function get_esqueci_senha()
 	{
 		
 	}
 
-	public function instagram()
+	public function insert_api_instagram( $dados )
 	{
-		$curl = curl_init();
-		curl_setopt($curl, CURLOPT_URL, $this->data_model['api']);
-		curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 3);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+	
+		if(!empty( $dados )):
+			$_dados['access_token'] = $dados->access_token;
+			$_dados['user_id'] = $dados->user->id;
+			$_dados['user_bio'] = $dados->user->bio;
+			$_dados['user_name'] = $dados->user->username;
+			$_dados['user_picture'] = $dados->user->profile_picture;
+			$_dados['user_full_name'] = $dados->user->full_name;
+			$_dados['usu_id'] = $this->session->userdata('id-login');
+		
+			return $this->db->insert('tb_instagram_api' , $_dados);
+		else:
+			return false;
+		endif;
+	}
 
-		$data = json_decode(curl_exec($curl));
 
-		var_dump($data);
+	public function get_api_instagram( )
+	{
+		$this->db->where('usu_id' , $this->session->userdata('id-login')); 
+		return $this->db->get('tb_instagram_api')->row();
 	}
 }

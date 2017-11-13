@@ -22,13 +22,28 @@ class Instagram extends MY_Controller{
 
 		$instagram = new Instagram\Instagram($this->config_api);
 		
-		$link = $instagram->getLoginUrl(array(
+		$link = $instagram->getLoginUrl(
+		array(
 			'basic',
 			'likes',
 			'relationships'
-		  ));
+		));
 
-		$link = '<a class="btn btn-lg btn-success" class="login" href="'.$link.'">» Login with Instagram</a>';
+		$conta = $this->MY_Model->get_api_instagram();
+			
+		if(!empty( $conta )):
+			$instagram->setAccessToken($conta);
+			$midia = $instagram->getUserMedia();
+		endif;
+
+		$total_likes = 0;
+		$total_comments = 0;
+
+		foreach($midia->data as $index => $result):
+			$total_likes += $result->likes->count;
+			$total_comments += $result->comments->count;
+		endforeach;
+
 
 		$config = array(
 			'c_class' => get_class(),
@@ -36,7 +51,11 @@ class Instagram extends MY_Controller{
 			'c_diretorio_pagina' => 'painel/pagina/redesocial/instagram',
 			'c_layout' => 'painel',
 			'titulo' =>  get_class(),
-			'link' => $link
+			'link' => array('titulo' => 'Entrar Instagram' , 'url' => $link),
+			'midia' => $midia,
+			'conta' => $conta,
+			'total_likes' => $total_likes,
+			'total_comments' => $total_comments
 		);
 
 		$data['pagina'] = PaginaView(
@@ -47,7 +66,6 @@ class Instagram extends MY_Controller{
 		);
 
 		$this->load->view('layout/painel/index' , array_merge($data ,$config ));
-
 	}
 	
 
@@ -55,9 +73,19 @@ class Instagram extends MY_Controller{
 	{
 		$instagram = new Instagram\Instagram($this->config_api);
 
-		$token = $instagram->getOAuthToken($_GET['code']);
+		$token_instagram = $instagram->getOAuthToken($_GET['code']);
 
-		 print_r($token);
+		if(!empty( $token_instagram )):
+			if($this->MY_Model->insert_api_instagram(  $token_instagram )):
+				redirect(base_url('painel/redesocial/instagram/'));
+			endif;
+		endif;
+
+	}
+
+	public function check()
+	{
+		echo $this->session->userdata('id-login');
 	}
 
 

@@ -1,5 +1,6 @@
 <?php 
-	require_once 'vendor/Twitter/TwitterOAuth.php';
+require_once 'vendor/Twitter/TwitterOAuth.php';
+
 class Twitter extends MY_Controller{
 
 	private $config_api = array(
@@ -24,7 +25,7 @@ class Twitter extends MY_Controller{
 			$this->config_api['ACCESS_TOKEN_SECRET']
 		);
 
-		$twitter['timeline'] = $connection->get("statuses/home_timeline", ["count" => 25, "exclude_replies" => true]);
+		$twitter['timeline'] = $connection->get("statuses/home_timeline");
 	
 		$config = array(
 			'c_class' => get_class(),
@@ -53,7 +54,7 @@ class Twitter extends MY_Controller{
 			$this->config_api['ACCESS_TOKEN_SECRET']
 		);
 		
-		$statues = $connection->post("statuses/update", ["status" => "hello world"]);
+		$statues = $connection->post("statuses/update", ["status" => "twitter api"]);
 
 		echo '<pre>';
 		print_r($statues);
