@@ -2,7 +2,7 @@
 
 -- use DB_PADRAO;
 
-create table tb_Site(
+create table tb_site(
 	id int not null auto_increment primary key,
     titulo varchar(200) not null,
     subtitulo varchar(200) not null,
@@ -30,20 +30,132 @@ create table tb_sobre(
     data timestamp not null
 );
 
-create table tb_Banner(
+
+
+create table tb_login(
+	id int not null auto_increment primary key,
+    slug varchar(200) not null,
+    usuario varchar(200) not null default 'LOGIN',
+	senha varchar(200) not null default 'SENHA',
+    email varchar(200) not null default 'EMAIL'
+);
+
+create table tb_modulos(
+	id int not null auto_increment primary key,
+    slug varchar(200) not null,
+    titulo varchar(200) not null,
+    url varchar(200) not null,
+    embed varchar(200) not null,
+    descricao varchar(200) not null,
+    data timestamp not null
+);
+
+create table tb_permissao(
+	id int not null auto_increment primary key,
+    tb_modulos int default 1,
+    tb_login int default 1,
+    view varchar(10) null default 'CHECK',
+    salvar varchar(10) null default 'CHECK',
+	editar varchar(10) null default 'CHECK',
+    deletar varchar(10) null default 'CHECK',
+    data timestamp not null
+);
+
+create table tb_Status_produto(
+	id int not null auto_increment primary key,
+    slug varchar(200) not null,
+    data timestamp not null
+);
+
+create table tb_Categorias_produto(
+	id int not null auto_increment primary key,
+    slug varchar(200) not null,
+    data timestamp not null
+);
+
+create table tb_forma_pagamento(
+	id int not null auto_increment primary key,
+    slug varchar(200) not null ,
+    link varchar(200) not null ,
+    imagem varchar(600) not null default 'FILE',
+    data timestamp not null
+);
+
+create table tb_Pais(
+	id int not null auto_increment primary key,
+    slug varchar(200) not null,
+	data timestamp not null
+);
+
+create table tb_Estado(
+	id int not null auto_increment primary key,
+    slug varchar(200) not null,
+    tb_Pais int default 1,
+	data timestamp not null
+);
+
+create table tb_Cidade(
+	id int not null auto_increment primary key,
+    slug varchar(200) not null,
+    tb_Estado int default 1,
+	data timestamp not null
+);
+
+create table tb_Clientes_fornecedores(
+	id int not null auto_increment primary key,
+    usuario varchar(200) not null default 'LOGIN',
+	senha varchar(200) not null default 'SENHA',
+	slug varchar(200) not null,
+    apelido varchar(200) not null,
+	email varchar(200) not null default 'EMAIL',
+	imagem varchar(600) not null default 'FILE',
+    cpf_cnpj int(20) not null,
+
+    tb_Pais int default 1,
+    tb_Estado int default 1,
+    tb_Cidade int default 1,
+    
+    codigo_postal int not null,
+    logradouro varchar(200) not null,
+    complemento varchar(200) not null,
+    numero int not null,
+
+    data timestamp not null
+);
+
+create table tb_produtos(
 	id int not null auto_increment primary key,
     titulo varchar(200) not null,
     subtitulo varchar(200) not null,
     slug varchar(200) not null,
     descricao longtext not null,
-    imagem varchar(600) not null default 'FILE',
-    link varchar(600) not null,
+    imagem varchar(200) not null default 'FILE',
+    link varchar(200) not null,
+    sku varchar(200) not null,
+    quantidade int(200) not null,
+    tb_Categorias_produto int not null default 1,
+    tb_Status_produto int not null default 1,
+    tb_forma_pagamento int not null default 1,
+    tb_Clientes_fornecedores int not null default 1,
+    usuario int not null,
+    valor_fornecedor decimal(10,2) not null,
+    valor_loja decimal(10,2) not null,
     embed longtext not null,
-    data timestamp not null
+    data timestamp not null,
+    data_cadastro timestamp null,
+    data_saida timestamp  null,
+    data_devolucao timestamp  null,
+    data_pagamento timestamp  null,
+    data_faturamento timestamp null
 );
 
-
-
+create table tb_Galeria_produto(
+    id int not null auto_increment primary key,
+    slug varchar(200) not null,
+    tb_produtos int not null default 1,
+    imagem varchar(600) not null default 'FILE',
+	data timestamp not null
+);
 
 create table tb_Servicos(
 	id int not null auto_increment primary key,
@@ -52,7 +164,6 @@ create table tb_Servicos(
     imagem varchar(600) not null default 'FILE',
     data timestamp not null
 );
-
 
 create table tb_contato(
 	id int not null auto_increment primary key,
@@ -70,80 +181,19 @@ create table tb_redesocial(
     data timestamp not null
 );
 
-
-
-
-create table tb_Tipo_Planos(
-	id int not null auto_increment primary key,
-    slug varchar(200) not null,
-    valor decimal(10 ,2) not null,
-    texto longtext not null,
-    imagem varchar(600) not null default 'FILE',
-    data timestamp not null
-);
-
-create table tb_Planos(
-	id int not null auto_increment primary key,
-    slug varchar(200) not null,
-    valor decimal(10,2) not null,
-	tb_Tipo_Planos int not null default 1,
-    texto longtext not null,
-    imagem varchar(600) not null default 'FILE',
-    data timestamp not null
-);
-
-
-create table tb_Icone(
+create table tb_icone(
 	id int not null auto_increment primary key,
     slug varchar(200) not null,
     icone varchar(200) not null ,
     data timestamp not null
 );
 
-create table tb_Menu(
+create table tb_menu(
 	id int not null auto_increment primary key,
     slug varchar(200) not null,
-	tb_Icone int not null default 1,
+	tb_icone int not null default 1,
     data timestamp not null
 );
-
-
-create table tb_Projetos(
-	id int not null auto_increment primary key,
-    titulo varchar(200) not null,
-    subtitulo varchar(200) not null,
-    slug varchar(200) not null,
-    descricao longtext not null,
-    imagem varchar(600) not null default 'FILE',
-    link varchar(600) not null,
-    embed longtext not null,
-    data timestamp not null
-);
-
-
-create table tb_Empresa(
-	id int not null auto_increment primary key,
-    slug varchar(200) not null,
-    descricao longtext not null,
-    imagem varchar(600) not null default 'FILE',
-    link varchar(600) not null,
-    embed longtext not null,
-    data timestamp not null
-);
-
-
-create table tb_App(
-	id int not null auto_increment primary key,
-    slug varchar(200) not null,
-    descricao longtext not null,
-    imagem varchar(600) not null default 'FILE',
-   
-    link varchar(600) not null,
-    valor decimal(10,2) not null,
-    desconto decimal(10,2) not null,
-    data timestamp not null
-);
-
 
 create table tb_Categorias(
 	id int not null auto_increment primary key,
@@ -159,16 +209,6 @@ create table tb_Tags(
 );
 
 
-create table tb_Blogs(
-	id int not null auto_increment primary key, 
-	slug varchar(200) not null,
-    subtitulo varchar(200) not null,
-    texto longtext not null,
-    imagem varchar(600) not null default 'FILE',
-    tb_Categorias  int default 1,
-    fonte varchar(200) not null,
-    data timestamp not null
-);
 
 create table tb_politica(
 	id int not null auto_increment primary key, 
@@ -198,6 +238,103 @@ create table tb_Duvidas(
 	slug varchar(200) not null,
     tb_Servicos int not null default 1,
     texto longtext not null,
+    data timestamp not null
+);
+
+
+
+create table tb_Paginas(
+	id int not null auto_increment primary key,
+    slug varchar(200) not null ,
+    link varchar(200) not null ,
+    imagem varchar(600) not null default 'FILE',
+    texto longtext not null,
+    data timestamp not null
+);
+
+
+
+create table tb_Contato(
+	id int not null auto_increment primary key,
+	titulo varchar(200) not null ,
+    nome varchar(200) not null ,
+    email varchar(200) not null ,
+	telefone varchar(200) not null ,
+	descricao longtext not null ,
+    data timestamp not null
+);
+
+
+
+
+--  fim brechweb
+
+create table tb_Projetos(
+	id int not null auto_increment primary key,
+    titulo varchar(200) not null,
+    subtitulo varchar(200) not null,
+    slug varchar(200) not null,
+    descricao longtext not null,
+    imagem varchar(600) not null default 'FILE',
+    link varchar(600) not null,
+    embed longtext not null,
+    data timestamp not null
+);
+
+create table tb_Tipo_Planos(
+	id int not null auto_increment primary key,
+    slug varchar(200) not null,
+    valor decimal(10 ,2) not null,
+    texto longtext not null,
+    imagem varchar(600) not null default 'FILE',
+    data timestamp not null
+);
+
+create table tb_Planos(
+	id int not null auto_increment primary key,
+    slug varchar(200) not null,
+    valor decimal(10,2) not null,
+	tb_Tipo_Planos int not null default 1,
+    texto longtext not null,
+    imagem varchar(600) not null default 'FILE',
+    data timestamp not null
+);
+
+create table tb_Empresa(
+	id int not null auto_increment primary key,
+    slug varchar(200) not null,
+    descricao longtext not null,
+    imagem varchar(600) not null default 'FILE',
+    link varchar(600) not null,
+    embed longtext not null,
+    data timestamp not null
+);
+
+
+create table tb_App(
+	id int not null auto_increment primary key,
+    slug varchar(200) not null,
+    descricao longtext not null,
+    imagem varchar(600) not null default 'FILE',
+   
+    link varchar(600) not null,
+    valor decimal(10,2) not null,
+    desconto decimal(10,2) not null,
+    data timestamp not null
+);
+
+
+
+
+
+create table tb_blogs(
+	id int not null auto_increment primary key, 
+	slug varchar(200) not null,
+    subtitulo varchar(200) not null,
+    texto longtext not null,
+    imagem varchar(600) not null default 'FILE',
+    tb_Categorias  int default 1,
+    fonte varchar(200) not null,
     data timestamp not null
 );
 
@@ -432,27 +569,6 @@ create table tb_Info_formas_pagamento(
     slug varchar(200) not null ,
     link varchar(200) not null ,
     imagem varchar(600) not null default 'FILE',
-    data timestamp not null
-);
-
-create table tb_Paginas(
-	id int not null auto_increment primary key,
-    slug varchar(200) not null ,
-    link varchar(200) not null ,
-    imagem varchar(600) not null default 'FILE',
-    texto longtext not null,
-    data timestamp not null
-);
-
-
-
-create table tb_Contato(
-	id int not null auto_increment primary key,
-	titulo varchar(200) not null ,
-    nome varchar(200) not null ,
-    email varchar(200) not null ,
-	telefone varchar(200) not null ,
-	descricao longtext not null ,
     data timestamp not null
 );
 

@@ -31,4 +31,20 @@ class MY_Model extends CI_Model
 		$this->db->where('usu_id' , $this->session->userdata('id-login')); 
 		return $this->db->get('tb_instagram_api')->row();
 	}
+
+
+
+	# configurações padroes do sistema de ferramentas e modulos
+
+	public function get_permissoes( Array $dados )
+	{ 
+		if(!empty( $dados )):
+			$this->db->where('tb_permissao.tb_login',$this->session->userdata('id-login'));
+			$this->db->where('tb_modulos.slug',$dados['modulo']);
+			$this->db->join('tb_modulos','tb_permissao.tb_modulos = tb_modulos.id');
+			return $this->db->get('tb_permissao')->row();
+		else:
+			return false;
+		endif;
+	}
 }

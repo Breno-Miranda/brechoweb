@@ -8,6 +8,7 @@
     <!-- Javascript -->
     <script src="<?= base_url('public/js/menu.js')?>" charset="utf-8"></script>
     <script src="https://use.fontawesome.com/2bd7e1b774.js"></script>
+    
   </head>
   <body>
     <div class="window">
@@ -77,6 +78,12 @@
           </div>
 
           <div class="pane">
+            <?php if(!empty($this->session->flashdata('msm'))): ?>
+              <div style="float:right; padding:2%; background:red">
+                  <?= $this->session->flashdata('msm');?>
+              </div>
+            <?php endif; ?>
+          
             <?php $this->load->view($pagina) ?>
           </div>
         </div>

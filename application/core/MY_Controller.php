@@ -17,6 +17,8 @@ class MY_Controller extends CI_Controller {
 
   	public function layout($config = array()){
 
+    $this->permissao(array('modulo' => $config['c_class'] , 'metodo' => $config['c_metodo']));
+ 
     $_SESSION['ultimo_url'] = $_SERVER['REQUEST_URI'];
 
   	$this->pagination($config);
@@ -119,7 +121,7 @@ class MY_Controller extends CI_Controller {
         $config,
         $dados_view_site,
         $dados_view_padrao
-			 ));
+		));
 
   	}
 
@@ -162,6 +164,45 @@ class MY_Controller extends CI_Controller {
     public function email()
     {
         
+    }
+
+    public function permissao( $dados )
+    {
+        if( $dados )
+        {   
+            $result = $this->MY_Model->get_permissoes( $dados );
+
+            $metodo = strval($dados['metodo']);
+
+            
+
+            switch($metodo)
+            {
+                case 'index':
+                    if( !$result->view):  $this->session->set_flashdata('msm', 'Você nao tem acesso ao modulo - '.$dados['modulo']); redirect(base_url('painel'));  endif;
+                break;
+
+                case 'salvar':
+                    if( !$result->$metodo):  $this->session->set_flashdata('msm', 'Você nao tem acesso ao modulo - '.$dados['modulo']); redirect(base_url('painel'));  endif;
+                break;
+
+                case 'editar':
+            print_r($metodo);
+            
+                    if( !$result->$metodo):  $this->session->set_flashdata('msm', 'Você nao tem acesso ao modulo - '.$dados['modulo']); redirect(base_url('painel'));  endif;
+                break;
+
+                case 'deletar':
+                    if( !$result->$metodo):  $this->session->set_flashdata('msm', 'Você nao tem acesso ao modulo - '.$dados['modulo']); redirect(base_url('painel'));  endif;
+                break;
+
+                default:
+                    redirect(base_url('painel'));
+                break;
+            }
+        } else {
+            return false;
+        }
     }
 
 

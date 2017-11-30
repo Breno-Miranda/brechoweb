@@ -9,7 +9,9 @@
 				<?php if (
 					$resultCampos->type == "varchar" && 
 					$resultCampos->default != 'FILE' &&
-					$resultCampos->default != 'SENHA'): ?>
+					$resultCampos->default != 'SENHA'&&
+					$resultCampos->default != 'CHECK'
+					): ?>
 				<?= form_label(_string($resultCampos->name));  ?>
 				<?= form_input(array('name'=> $resultCampos->name , 'class' => 'form-control'));  ?>
 				<?php elseif($resultCampos->primary_key == 1): ?>
@@ -35,6 +37,9 @@
 				<?php elseif($resultCampos->default == 'RADIO'): ?>
 					<?= form_label(_string($resultCampos->name));  ?>
 					<?= form_radio(array('name'=> $resultCampos->name, 'class' => 'form-control'));  ?>
+				<?php elseif($resultCampos->default == 'CHECK' && $resultCampos->name != "timestamp" && $resultCampos->type == "varchar" ): ?>
+					<?= form_label(_string($resultCampos->name));  ?>
+					<?= form_checkbox(array('name'=> $resultCampos->name, 'class' => 'form-control'  , 'value' => true));  ?>
 				<?php elseif($resultCampos->default == 'FILE' && $resultCampos->name != "timestamp" && $resultCampos->type == "varchar"): ?>
 					<?= form_label(_string($resultCampos->name));  ?>
 					<?= form_upload(array('name'=> $resultCampos->name, 'class' => 'form-control'));  ?>
