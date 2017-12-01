@@ -10,6 +10,9 @@ class Login extends MY_Controller{
     
     public function index()
     {   
+
+        $this->permissao(array('modulo' => get_class() , 'metodo' =>  get_class_methods(get_class())[1]));
+        
         $this->layout(array(
             'c_diretorio' => 'layout/painel/index',
             'c_class' => get_class(),
@@ -29,6 +32,9 @@ class Login extends MY_Controller{
 
     public function salvar()
     {
+
+        $this->permissao(array('modulo' => get_class() , 'metodo' =>  get_class_methods(get_class())[2]));
+        
 
         $data['tabela'] = tabelasBD(get_class());
         $data['campos'] = $this->Modulos_Model->tabela($data['tabela'] , null);
@@ -94,6 +100,9 @@ class Login extends MY_Controller{
 
     public function editar($ID_WHERE = null)
     {
+
+        $this->permissao(array('modulo' => get_class() , 'metodo' =>  get_class_methods(get_class())[3]));
+        
         
         $data['tabela'] = tabelasBD(get_class());
         $data['campos'] = $this->Modulos_Model->tabela($data['tabela'] , null);
@@ -161,6 +170,9 @@ class Login extends MY_Controller{
     }
     public function deletar($id = null )
     {
+
+        $this->permissao(array('modulo' => get_class() , 'metodo' =>  get_class_methods(get_class())[4]));
+        
         $data['tabela'] = tabelasBD(get_class());
         $data['campos'] = $this->Modulos_Model->tabela($data['tabela'] , null);
         $data['metodo'] = get_class_methods(get_class())[4];

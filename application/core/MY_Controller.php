@@ -17,10 +17,7 @@ class MY_Controller extends CI_Controller {
 
   	public function layout($config = array()){
 
-    $this->permissao(array('modulo' => $config['c_class'] , 'metodo' => $config['c_metodo']));
  
-    $_SESSION['ultimo_url'] = $_SERVER['REQUEST_URI'];
-
   	$this->pagination($config);
 
     if(!empty($config['c_id_where_blogs'])): $dados_view['id_where'] = $config['c_id_where_blogs']; endif;
@@ -165,6 +162,11 @@ class MY_Controller extends CI_Controller {
     {
         
     }
+    
+    public function ultima_url()
+    {
+        redirect(base_url($_SERVER['REQUEST_URI']));
+    }
 
     public function permissao( $dados )
     {
@@ -173,8 +175,6 @@ class MY_Controller extends CI_Controller {
             $result = $this->MY_Model->get_permissoes( $dados );
 
             $metodo = strval($dados['metodo']);
-
-            
 
             switch($metodo)
             {

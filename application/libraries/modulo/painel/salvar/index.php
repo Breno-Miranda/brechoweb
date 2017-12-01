@@ -1,6 +1,7 @@
-<style type="text/css">
-	.main{ margin: auto; width: 80%; background: #fff;  padding: 10px; margin-top: 5%; margin-bottom: 10%;} 
-</style>
+
+<script  src="https://code.jquery.com/jquery-3.2.1.js"  crossorigin="anonymous"></script>
+<script src="<?= base_url('public/js/chosen/chosen.jquery.js')?>"></script>
+
 <div class="main">
 		<?= form_open_multipart($action) ?>
 			<?php foreach ($campos as $resultCampos): ?> 
@@ -30,7 +31,7 @@
 				<?php elseif($resultCampos->default == 1 && $resultCampos->name != "timestamp"): ?>
 					<?= form_label(_string($resultCampos->name));  ?>
 					<?php $campoDrop = strval($resultCampos->name); ?>
-					<?= form_dropdown(array('name'=> $resultCampos->name, 'class' => 'form-control') , $$campoDrop);  ?>
+					<?= form_dropdown( array('name' => $resultCampos->name ,'class'=> 'chosen' ), $$campoDrop);  ?>
 				<?php elseif($resultCampos->default == 'SENHA' && $resultCampos->name != "timestamp" && $resultCampos->type == "varchar" ): ?>
 					<?= form_label(_string($resultCampos->name));  ?>
 					<?= form_password(array('name'=> $resultCampos->name, 'class' => 'form-control'));  ?>
@@ -52,3 +53,11 @@
 		<?= form_submit(array('value' => 'Finalizar' , 'class' => 'btn btn-primary pull-right')) ?>
 		<?= form_close() ?>
 </div>
+
+<script>
+	jQuery(document).ready(function(){
+		$(".chosen").chosen({width: "100%"}); 
+	});
+</script>
+
+<link href="http://harvesthq.github.io/chosen/chosen.css" rel="stylesheet"/>

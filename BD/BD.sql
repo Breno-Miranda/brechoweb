@@ -784,6 +784,13 @@ create table tb_Login_produtos_graficos(
 	logo varchar(200) not null default 'FILE'
 );
 
+LOAD DATA LOCAL INFILE '/home/breno/Documentos/teste/lista_categoria_produto.csv'
+INTO TABLE tb_Categorias_produto  CHARACTER SET utf8
+FIELDS TERMINATED BY ';' -- Se o Csv for com o usu de ',' OR quando for ponto-e-virgula ';'
+LINES TERMINATED BY '\n' -- Utilizar a quebra da linha no linux, caso queria usar no windows colocar '\r\n'
+IGNORE 1 ROWS
+
+
 
 
 

@@ -106,7 +106,7 @@ class Permissao extends MY_Controller{
         $data['campos'] = $this->Modulos_Model->tabela($data['tabela'] , null);
         
         foreach ($data['campos'] as $resultCampos): // CAMPOS DA TABELA DESEJADA 
-            if($resultCampos->primary_key != 1 && $resultCampos->default != 'FILE'): 
+            if($resultCampos->primary_key != 1 && $resultCampos->default != 'FILE'  && $resultCampos->default != 'CHECK'): 
              $this->form_validation->set_rules($resultCampos->name, $resultCampos->name, 'required');
             endif;
         endforeach;
