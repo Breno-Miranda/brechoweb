@@ -1,49 +1,37 @@
-<style type="text/css">
-	.main{ margin: auto; width: 80%; background: #fff;  padding: 10px; margin-top: 5%; margin-bottom: 10%;} 
-</style>
-<div class="main">
-		<?= form_open_multipart($action) ?>
-			<?php foreach ($campos as $resultCampos): ?> 
-				<?php echo form_error($resultCampos->name); ?>
-				<div class="form-group">
-				<?php if (
-					$resultCampos->type == "varchar" && 
-					$resultCampos->default != 'FILE' &&
-					$resultCampos->default != 'SENHA'): ?>
-				<?= form_label(_string($resultCampos->name));  ?>
-				<?= form_input(array('name'=> $resultCampos->name , 'class' => 'form-control'));  ?>
-				<?php elseif($resultCampos->primary_key == 1): ?>
-				<?php elseif($resultCampos->type == "int" && $resultCampos->default != 1 ): ?>
-					<?= form_label(_string($resultCampos->name));  ?>
-					<?= form_input(array('name'=> $resultCampos->name, 'class' => 'form-control'));  ?>
-				<?php elseif($resultCampos->type == "float" && $resultCampos->default != 1 ): ?>
-					<?= form_label(_string($resultCampos->name));  ?>
-					<?= form_input(array('name'=> $resultCampos->name, 'class' => 'form-control'));  ?>
-				<?php elseif($resultCampos->type == "decimal" && $resultCampos->default != 1): ?>
-					<?= form_label(_string($resultCampos->name));  ?>
-					<?= form_input(array('name'=> $resultCampos->name, 'class' => 'form-control' ));  ?>
-				<?php elseif($resultCampos->type == "longtext"): ?>	
-					<?= form_label(_string($resultCampos->name));  ?>
-					<?= form_textarea(array('id'=>'text' ,'name'=> $resultCampos->name, 'class' => 'form-control'));  ?>
-				<?php elseif($resultCampos->default == 1 && $resultCampos->name != "timestamp"): ?>
-					<?= form_label(_string($resultCampos->name));  ?>
-					<?php $campoDrop = strval($resultCampos->name); ?>
-					<?= form_dropdown(array('name'=> $resultCampos->name, 'class' => 'form-control') , $$campoDrop);  ?>
-				<?php elseif($resultCampos->default == 'SENHA' && $resultCampos->name != "timestamp" && $resultCampos->type == "varchar" ): ?>
-					<?= form_label(_string($resultCampos->name));  ?>
-					<?= form_password(array('name'=> $resultCampos->name, 'class' => 'form-control'));  ?>
-				<?php elseif($resultCampos->default == 'RADIO'): ?>
-					<?= form_label(_string($resultCampos->name));  ?>
-					<?= form_radio(array('name'=> $resultCampos->name, 'class' => 'form-control'));  ?>
-				<?php elseif($resultCampos->default == 'FILE' && $resultCampos->name != "timestamp" && $resultCampos->type == "varchar"): ?>
-					<?= form_label(_string($resultCampos->name));  ?>
-					<?= form_upload(array('name'=> $resultCampos->name, 'class' => 'form-control'));  ?>
-				<?php elseif($resultCampos->type == "timestamp"): ?>
-					<?= form_label(_string($resultCampos->name));  ?>
-					<?= form_input(array('name'=> $resultCampos->name,'value'=>date("Y-m-d H:i:s") ,'class' => 'form-control'));  ?>
-				<?php endif ?>
-				</div>
+<table class="table-striped">
+	<thead>
+		<tr>
+			<?php  foreach ($campos as $resultCamposTable): ?>
+			<?php //echo '<pre>'; print_r($resultCamposTable) ?>
+				<?php if ($resultCamposTable->type == "longtext" &&  $resultCamposTable->name === "texto" ||   $resultCamposTable->name === "descricao" ): ?>
+				<?php else: ?>	<td><?= _string($resultCamposTable->name); ?></td> <?php endif ?>
+			<?php endforeach; ?>
+			<td>Ações</td>
+		</tr>
+	</thead>
+	<tbody>
+	<?php foreach ($dados_view_padrao as $resultData): //CONTEUDO DO BANCO ?>
+		<tr>
+			<?php foreach ($campos as $resultCampos):  $_dados = strval($resultCampos->name); //CONVERTENDO ARRAY PRA STRING  ?>
+			<?php if ($resultCampos->type == "longtext" && $resultCampos->name === "texto" ||  $resultCampos->name === "descricao" ): ?>
+			<!-- campos que nao entra -->
+			<?php elseif($resultCampos->default === "FILE"): ?><td align="center"> <a target="blank_" href="<?= $resultData->$_dados; ?>">IMG</a></td>
+			<?php elseif( $resultCampos->name === "view"): ?> <?php if($resultData->$_dados === '1'): ?> <td>ok</td> <?php else: ?> <td>x</td><?php endif; ?>
+			<?php elseif( $resultCampos->name === "salvar"): ?> <?php if($resultData->$_dados === '1'): ?> <td>ok</td> <?php else: ?> <td>x</td><?php endif; ?>
+			<?php elseif( $resultCampos->name === "editar"): ?> <?php if($resultData->$_dados === '1'): ?> <td>ok</td> <?php else: ?> <td>x</td><?php endif; ?>
+			<?php elseif( $resultCampos->name === "deletar"): ?> <?php if($resultData->$_dados === '1'): ?> <td>ok</td> <?php else: ?> <td>x</td><?php endif; ?>
+			<?php else: ?> 	<td><?= $resultData->$_dados; ?></td> <?php endif ?>
 			<?php endforeach ?>
-		<?= form_submit(array('value' => 'Finalizar' , 'class' => 'btn btn-primary pull-right')) ?>
-		<?= form_close() ?>
+			<td>
+				<a href="<?= BaseController($c_class , 'editar' , $resultData->id , 'painel') ?>"><i style="font-size:20px;" class="icon icon-pencil" aria-hidden=""></i></a>
+				<a href="<?= BaseController($c_class , 'deletar' , $resultData->id , 'painel') ?>"><i  style="font-size: 20px;" class="icon icon-trash" aria-hidden=""></i></a>
+			</td>
+		</tr>
+	<?php endforeach ?>
+	</tbody>
+</table>
+<div class="row pagination-margin">
+	<?php if (isset($pagination)): ?>
+		<?php echo $pagination; ?>
+	<?php endif ?>
 </div>

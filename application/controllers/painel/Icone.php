@@ -16,7 +16,7 @@ class Icone extends MY_Controller{
             'c_metodo' => get_class_methods(get_class())[1],
             'c_diretorio_pagina' => 'painel/',
             'c_layout' => 'site',
-            'c_pagination' => 'pagination_blogs',
+            'c_pagination' => 'pagination',
             'c_limit' => 25,
             'c_class_pagination' =>
                 array(

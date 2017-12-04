@@ -5,9 +5,6 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="<?= base_url('public/css/photon.min.css')?>">
     <link rel="stylesheet" href="<?= base_url('public/css/style.css')?>">
-    <!-- Javascript -->
-    <script src="https://use.fontawesome.com/2bd7e1b774.js"></script>
-    
   </head>
   <body>
     <div class="window">

@@ -61,13 +61,13 @@ create table tb_permissao(
     data timestamp not null
 );
 
-create table tb_Status_produto(
+create table tb_status_produto(
 	id int not null auto_increment primary key,
     slug varchar(200) not null,
     data timestamp not null
 );
 
-create table tb_Categorias_produto(
+create table tb_categorias_produto(
 	id int not null auto_increment primary key,
     slug varchar(200) not null,
     data timestamp not null
@@ -81,27 +81,27 @@ create table tb_forma_pagamento(
     data timestamp not null
 );
 
-create table tb_Pais(
+create table tb_pais(
 	id int not null auto_increment primary key,
     slug varchar(200) not null,
 	data timestamp not null
 );
 
-create table tb_Estado(
+create table tb_estado(
 	id int not null auto_increment primary key,
     slug varchar(200) not null,
     tb_Pais int default 1,
 	data timestamp not null
 );
 
-create table tb_Cidade(
+create table tb_cidade(
 	id int not null auto_increment primary key,
     slug varchar(200) not null,
     tb_Estado int default 1,
 	data timestamp not null
 );
 
-create table tb_Clientes_fornecedores(
+create table tb_fornecedores(
 	id int not null auto_increment primary key,
     usuario varchar(200) not null default 'LOGIN',
 	senha varchar(200) not null default 'SENHA',
@@ -111,9 +111,9 @@ create table tb_Clientes_fornecedores(
 	imagem varchar(600) not null default 'FILE',
     cpf_cnpj int(20) not null,
 
-    tb_Pais int default 1,
-    tb_Estado int default 1,
-    tb_Cidade int default 1,
+    tb_pais int default 1,
+    tb_estado int default 1,
+    tb_cidade int default 1,
     
     codigo_postal int not null,
     logradouro varchar(200) not null,
@@ -133,10 +133,10 @@ create table tb_produtos(
     link varchar(200) not null,
     sku varchar(200) not null,
     quantidade int(200) not null,
-    tb_Categorias_produto int not null default 1,
-    tb_Status_produto int not null default 1,
+    tb_categorias_produto int not null default 1,
+    tb_status_produto int not null default 1,
     tb_forma_pagamento int not null default 1,
-    tb_Clientes_fornecedores int not null default 1,
+    tb_fornecedores int not null default 1,
     usuario int not null,
     valor_fornecedor decimal(10,2) not null,
     valor_loja decimal(10,2) not null,
@@ -149,7 +149,7 @@ create table tb_produtos(
     data_faturamento timestamp null
 );
 
-create table tb_Galeria_produto(
+create table tb_galeria_produto(
     id int not null auto_increment primary key,
     slug varchar(200) not null,
     tb_produtos int not null default 1,
@@ -157,7 +157,7 @@ create table tb_Galeria_produto(
 	data timestamp not null
 );
 
-create table tb_Servicos(
+create table tb_servicos(
 	id int not null auto_increment primary key,
     slug varchar(200) not null,
     texto longtext not null,
@@ -195,14 +195,14 @@ create table tb_menu(
     data timestamp not null
 );
 
-create table tb_Categorias(
+create table tb_categorias(
 	id int not null auto_increment primary key,
     slug varchar(200) not null,
     data timestamp not null
 );
 
 
-create table tb_Tags(
+create table tb_tags(
 	id int not null auto_increment primary key,
     slug varchar(200) not null,
     data timestamp not null
@@ -221,7 +221,7 @@ create table tb_politica(
 );
 
 
-create table tb_Videos(
+create table tb_videos(
 	id int not null auto_increment primary key,
     titulo varchar(200) not null,
 	subtitulo varchar(200) not null,
@@ -232,7 +232,7 @@ create table tb_Videos(
 );
 
 
-create table tb_Duvidas(
+create table tb_duvidas(
 	id int not null auto_increment primary key,
     titulo varchar(200) not null,
 	slug varchar(200) not null,

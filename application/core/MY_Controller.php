@@ -4,20 +4,17 @@ class MY_Controller extends CI_Controller {
    
     public function __construct() {
       parent::__construct();
-
       date_default_timezone_set('America/Sao_Paulo');
       ini_set('date.timezone', 'America/Sao_Paulo');
-
+      # LOAD BIBLIOTECAS 
       $this->load->library('library/Decodificar');
       $this->load->library('encrypt');
-
+      # LOAD MODEL 
       $this->load->model('MY_Model');
-
   	}
 
-  	public function layout($config = array()){
+  	public function layout( Array $config){
 
- 
   	$this->pagination($config);
 
     if(!empty($config['c_id_where_blogs'])): $dados_view['id_where'] = $config['c_id_where_blogs']; endif;
@@ -127,9 +124,9 @@ class MY_Controller extends CI_Controller {
 
   		$config_pagination = array(
             "base_url" => '',
-            "per_page" => $config['c_limit'],
+            "per_page" =>  $config['c_limit'],
             "num_links" => $config['c_limit'],
-            "uri_segment" => 1,
+            "uri_segment" => 25,
             'page_query_string' => true,
             "total_rows" => $this->Modulos_Model->count_query(tabelasBD($config['c_class_pagination']['c_tabela'])),
             "full_tag_open" => "<div class='pagination'>",
@@ -179,21 +176,19 @@ class MY_Controller extends CI_Controller {
             switch($metodo)
             {
                 case 'index':
-                    if( !$result->view):  $this->session->set_flashdata('msm', 'Você nao tem acesso ao modulo - '.$dados['modulo']); redirect(base_url('painel'));  endif;
+                    if( (int) !$result->view):  $this->session->set_flashdata('msm', 'Você não tem PERMISSÃO ao modulo - '.$dados['modulo']); redirect(base_url('painel'));  endif;
                 break;
 
                 case 'salvar':
-                    if( !$result->$metodo):  $this->session->set_flashdata('msm', 'Você nao tem acesso ao modulo - '.$dados['modulo']); redirect(base_url('painel'));  endif;
+                    if( (int) !$result->$metodo):  $this->session->set_flashdata('msm', 'Você não tem PERMISSÃO ao modulo - '.$dados['modulo']); redirect(base_url('painel'));  endif;
                 break;
 
                 case 'editar':
-            print_r($metodo);
-            
-                    if( !$result->$metodo):  $this->session->set_flashdata('msm', 'Você nao tem acesso ao modulo - '.$dados['modulo']); redirect(base_url('painel'));  endif;
+                    if( (int) !$result->$metodo):  $this->session->set_flashdata('msm', 'Você não tem PERMISSÃO ao modulo - '.$dados['modulo']); redirect(base_url('painel'));  endif;
                 break;
 
                 case 'deletar':
-                    if( !$result->$metodo):  $this->session->set_flashdata('msm', 'Você nao tem acesso ao modulo - '.$dados['modulo']); redirect(base_url('painel'));  endif;
+                    if( (int) !$result->$metodo):  $this->session->set_flashdata('msm', 'Você não tem PERMISSÃO ao modulo - '.$dados['modulo']); redirect(base_url('painel'));  endif;
                 break;
 
                 default:

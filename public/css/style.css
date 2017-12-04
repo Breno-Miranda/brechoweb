@@ -39,13 +39,13 @@
 	}
 
 	.pagination a {
-		color: black;
+		color: rgb(105, 122, 141);
 		float: left;
-		padding: 8px 16px;
+		padding: 4px 10px;
 		text-decoration: none;
 	}
 
-	.pagination a.active {
+	/* .pagination a.active {
 		background-color: #3C4B52;
 		color: white;
 		border-radius: 5px;
@@ -54,6 +54,10 @@
 	.pagination a:hover:not(.active) {
 		background-color: #ddd;
 		border-radius: 5px;
+	} */
+
+	.pagination-margin{
+		padding: 10%;
 	}
 
 
